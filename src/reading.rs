@@ -1,4 +1,6 @@
 //! Reading data method implementation.
+#[macro_use]
+extern crate alloc_no_stdlib;
 
 use super::{
     marker, private, BitFlags, Error, InterruptStatus, LedPulseWidth, Max3010x, Register,
