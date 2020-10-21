@@ -134,6 +134,7 @@ where
         let wr_ptr = data[0] & 0x1F;
         let rd_ptr = data[2] & 0x1F;
         let has_rolled_over = rd_ptr > wr_ptr;
+        println!("wr_ptr: {:?}\nrd_ptr: {:?}\ndata: {:?}", wr_ptr, rd_ptr, data);
         if has_rolled_over {
             Ok(32 - rd_ptr + wr_ptr)
         } else {
