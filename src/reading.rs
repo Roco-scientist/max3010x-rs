@@ -1,7 +1,4 @@
 //! Reading data method implementation.
-#[macro_use]
-extern crate alloc_no_stdlib;
-
 use super::{
     marker, private, BitFlags, Error, InterruptStatus, LedPulseWidth, Max3010x, Register,
     SamplingRate, DEVICE_ADDRESS,
@@ -47,7 +44,8 @@ where
         if output_data.len() < mode_channels {
             return Ok(0);
         }
-        let samples = self.get_available_sample_count()?;
+        // let samples = self.get_available_sample_count()?;
+        let samples = 32u8;
         let samples_fitting_in_input = output_data.len() / mode_channels;
         let sample_count = core::cmp::min(usize::from(samples), samples_fitting_in_input);
         if sample_count != 0 {
@@ -136,7 +134,6 @@ where
         let wr_ptr = data[0] & 0x1F;
         let rd_ptr = data[2] & 0x1F;
         let has_rolled_over = rd_ptr > wr_ptr;
-        println!("wr_ptr: {:?}\nrd_ptr: {:?}\ndata: {:?}", wr_ptr, rd_ptr, data);
         if has_rolled_over {
             Ok(32 - rd_ptr + wr_ptr)
         } else {
